@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="hr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMA | High-End Paint Atelier & Architectural Coatings</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        doma: {
+                            gold: '#D4AF37',
+                            goldLight: '#F3E5AB',
+                            goldDark: '#997A15',
+                            cyan: '#00F2FE',
+                            cyanDark: '#4FACFE',
+                            bgDark: '#0A0C10',
+                            cardDark: 'rgba(18, 22, 31, 0.75)',
+                            borderDark: 'rgba(212, 175, 55, 0.2)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #06080C;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Custom Glassmorphism */
+        .glass-panel {
+            background: rgba(15, 20, 28, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(252, 211, 77, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .glass-card {
+            background: rgba(22, 28, 38, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cyan-gradient-text {
+            background: linear-gradient(135deg, #00F2FE 0%, #4FACFE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border-glow {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Non-breaking founder names support */
+        .nobreak {
+            white-space: nowrap;
+            hyphens: none;
+            -webkit-hyphens: none;
+        }
+
+        /* Carbon fiber pattern background overlay */
+        .carbon-pattern {
+            background-color: #111;
+            background-image: 
+                linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000),
+                linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000);
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            height: 8px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+            border: 2px solid #000;
+        }
+
+        /* Before/After Slider Handle */
+        .ba-container {
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .ba-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Hypercar Body Color Overlay Dynamic Styling */
+        .car-body-paint {
+            transition: fill 0.35s ease, filter 0.35s ease;
+        }
+
+        .wheel-spin {
+            transform-origin: center;
+            animation: rotateWheel 12s linear infinite paused;
+        }
+
+        .wheel-active .wheel-spin {
+            animation-play-state: running;
+        }
+
+        @keyframes rotateWheel {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-yellow-500/30 selection:text-yellow-200">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-yellow-500/20 px-4 lg:px-12 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-700 flex items-center justify-center font-serif font-black text-black text-xl shadow-lg shadow-yellow-500/20">
+                    D
+                </div>
+                <div>
+                    <span class="font-serif font-bold text-2xl tracking-widest gold-gradient-text block leading-none">DOMA</span>
+                    <span class="text-[10px] tracking-widest text-gray-400 uppercase font-medium">Atelier & Architectural Coatings</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#hypercar" class="hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-car text-xs text-yellow-500"></i>
+                    <span data-lang-en="Hypercar Customizer" data-lang-hr="Hypercar Kustomizacija">Hypercar Kustomizacija</span>
+                </a>
+                <a href="#architectural" class="hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-building-user text-xs text-yellow-500"></i>
+                    <span data-lang-en="Architectural Villa" data-lang-hr="Arhitektonska Vila">Arhitektonska Vila</span>
+                </a>
+                <a href="#restoration" class="hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-xs text-yellow-500"></i>
+                    <span data-lang-en="Restoration" data-lang-hr="Restauracija">Restauracija</span>
+                </a>
+                <a href="#about" class="hover:text-yellow-400 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-xs text-yellow-500"></i>
+                    <span data-lang-en="About Founders" data-lang-hr="O Osnivačima">O Osnivačima</span>
+                </a>
+            </nav>
+
+            <!-- Language Switcher & Quote CTA -->
+            <div class="flex items-center space-x-4">
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-1.5 rounded-full border border-yellow-500/30 text-xs font-semibold bg-yellow-500/10 hover:bg-yellow-500/20 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-globe text-yellow-400"></i>
+                    <span id="langLabel" class="text-yellow-300">HR / EN</span>
+                </button>
+                
+                <a href="#contact" class="hidden sm:inline-flex items-center px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 hover:brightness-110 shadow-lg shadow-yellow-500/20 transition-all">
+                    <span data-lang-en="Inquire" data-lang-hr="Zatraži Ponudu">Zatraži Ponudu</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO / HYPERCAR CUSTOMIZER SECTION -->
+    <section id="hypercar" class="relative py-12 px-4 lg:px-12 max-w-7xl mx-auto w-full">
+        <div class="text-center mb-8">
+            <span class="inline-block px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 mb-3">
+                <i class="fa-solid fa-gem mr-1"></i> DOMA Bespoke Automotive Finish
+            </span>
+            <h1 class="font-serif text-3xl md:text-5xl font-extrabold tracking-tight mb-3">
+                <span data-lang-en="Pagani Zonda Cinque Edition Studio" data-lang-hr="Studio Pagani Zonda Cinque Izdanja">Studio Pagani Zonda Cinque Izdanja</span>
+            </h1>
+            <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto" data-lang-en="Precision vector customization studio for ultra-exclusive hypercars. Tailor bespoke body colors, exposed carbon finishes, and finish physics in real-time." data-lang-hr="Precizni studio za kustomizaciju ultra-ekskluzivnih hiperautomobila. Prilagodite jedinstvene boje karoserije, sjaj te detalje u realnom vremenu.">
+                Precizni studio za kustomizaciju ultra-ekskluzivnih hiperautomobila. Prilagodite jedinstvene boje karoserije, sjaj te detalje u realnom vremenu.
+            </p>
+        </div>
+
+        <!-- MAIN HYPERCAR DISPLAY & CONTROL GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- HYPERCAR CANVAS / SVG VECTOR VISUALIZER (8 cols) -->
+            <div class="lg:col-span-8 glass-panel rounded-2xl p-6 relative flex flex-col justify-between min-h-[460px] overflow-hidden border border-yellow-500/20">
+                
+                <!-- Top Status Header inside Canvas -->
+                <div class="flex justify-between items-center z-10 text-xs mb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-gray-300 font-mono uppercase tracking-wider text-[11px]" id="carSpecTitle">PAGANI ZONDA CINQUE SIDE PROFILE</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-400">
+                        <span class="bg-black/50 px-2.5 py-1 rounded border border-gray-800 text-[10px] font-mono">
+                            <i class="fa-solid fa-microchip text-yellow-500 mr-1"></i> Carbon V12 Chassis
+                        </span>
+                        <button onclick="toggleEngineSound()" id="soundBtn" class="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded border border-yellow-500/30 transition text-[11px] flex items-center gap-1">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span data-lang-en="Acoustic Spec" data-lang-hr="Akustika V12">Akustika V12</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- High Precision SVG Vector Car Display (Pagani Zonda Cinque Side Silhouette) -->
+                <div class="relative w-full my-auto py-6 flex items-center justify-center">
+                    
+                    <!-- Background Dynamic Shadow Floor -->
+                    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-[88%] h-12 bg-black/80 blur-xl rounded-full transform scale-y-50"></div>
+                    
+                    <!-- SVG VECTOR CONTAINER -->
+                    <svg id="zondaSvg" viewBox="0 0 1000 420" class="w-full h-auto max-h-[380px] drop-shadow-[0_20px_35px_rgba(0,0,0,0.8)] transition-all duration-300">
+                        <defs>
+                            <!-- Carbon Fiber Mesh Pattern -->
+                            <pattern id="carbonFiberPattern" width="6" height="6" patternUnits="userSpaceOnUse">
+                                <rect width="6" height="6" fill="#15171c"/>
+                                <polygon points="0,0 3,0 0,3" fill="#252a34"/>
+                                <polygon points="3,3 6,3 3,6" fill="#252a34"/>
+                                <polygon points="3,0 6,0 6,3" fill="#0d0e12"/>
+                                <polygon points="0,3 3,3 0,6" fill="#0d0e12"/>
+                            </pattern>
+
+                            <!-- Gloss Reflection Gradient Overlay -->
+                            <linearGradient id="glossOverlay" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+                                <stop offset="35%" stop-color="#ffffff" stop-opacity="0.1"/>
+                                <stop offset="70%" stop-color="#000000" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="#000000" stop-opacity="0.7"/>
+                            </linearGradient>
+
+                            <!-- Matte Finish Overlay -->
+                            <linearGradient id="matteOverlay" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+                                <stop offset="100%" stop-color="#000000" stop-opacity="0.5"/>
+                            </linearGradient>
+
+                            <!-- Metallic Shimmer Filter -->
+                            <filter id="metallicGlow" x="-10%" y="-10%" width="120%" height="120%">
+                                <feSpecularLighting surfaceScale="2" specularConstant="0.8" specularExponent="20" lighting-color="#ffffff" result="spec">
+                                    <feDistantLight azimuth="225" elevation="45"/>
+                                </feSpecularLighting>
+                                <feComposite in="SourceGraphic" in2="spec" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Reflection Grid Floor Line -->
+                        <line x1="50" y1="365" x2="950" y2="365" stroke="rgba(212,175,55,0.15)" stroke-width="2" stroke-dasharray="8 6"/>
+
+                        <!-- GROUP: BASE CAR CHASSIS SHADOW & LOWER CARBON EXPOSED SPLITTER -->
+                        <g id="lowerCarbonAerodynamics">
+                            <!-- Front Lower Splitter & Canards -->
+                            <path d="M 85,348 L 130,358 L 220,358 L 205,342 L 140,340 Z" fill="url(#carbonFiberPattern)" stroke="#2d3748" stroke-width="1.5"/>
+                            <path d="M 90,328 L 135,325 L 125,338 L 85,338 Z" fill="#222" stroke="#444" stroke-width="1"/>
+                            
+                            <!-- Main Side Skirt Carbon Trim -->
+                            <path d="M 285,355 L 710,355 L 725,335 L 700,325 L 290,325 Z" fill="url(#carbonFiberPattern)" stroke="#333" stroke-width="1"/>
+                            <path d="M 280,355 L 290,325 L 305,325 L 295,355 Z" fill="#000"/>
+
+                            <!-- Rear Diffuser Base Contour -->
+                            <path d="M 770,358 L 910,355 L 925,330 L 860,330 L 780,342 Z" fill="url(#carbonFiberPattern)" stroke="#333"/>
+                            <!-- Rear Quad Exhaust Tip Outline -->
+                            <circle cx="895" cy="310" r="10" fill="#111" stroke="#D4AF37" stroke-width="2"/>
+                            <circle cx="895" cy="310" r="5" fill="#000"/>
+                        </g>
+
+                        <!-- GROUP: PRIMARY CUSTOMIZABLE HYPERCAR BODY PANELS -->
+                        <g id="carBodyPrimaryGroup">
+                            <!-- Main Zonda Body Silhouette Path (Side Panels, Hood, Doors, Rear Fender Bodywork) -->
+                            <path id="carMainBody" class="car-body-paint" d="
+                                M 130,325 
+                                C 145,310 170,285 220,270 
+                                C 280,250 340,240 380,230 
+                                C 410,200 460,165 530,160 
+                                C 610,155 690,175 730,210 
+                                C 780,225 840,240 885,275 
+                                C 905,290 915,310 910,330 
+                                L 860,330 
+                                C 850,290 820,270 760,270 
+                                C 710,270 670,300 660,340
+                                L 340,340 
+                                C 330,295 290,270 235,270 
+                                C 185,270 150,300 140,325 
+                                Z" 
+                                fill="#ECEAE6" stroke="#111827" stroke-width="1.5"/>
+
+                            <!-- Door Accent Panel Overlay (Cinque Characteristic Door Insert) -->
+                            <path id="carDoorPanel" class="car-body-paint" d="
+                                M 410,245 
+                                L 590,230 
+                                C 620,230 635,250 630,280 
+                                L 610,320 
+                                L 420,320 
+                                C 390,295 395,260 410,245 Z" 
+                                fill="#FFFFFF" opacity="0.95" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+                        </g>
+
+                        <!-- GROUP: EXPOSED CARBON FIBER SPECIFIC TRIM & CINQUE ROOF SCOOP -->
+                        <g id="cinqueCarbonFeatures">
+                            <!-- Carbon Roof & Engine Spine Scoop (Cinque Signature) -->
+                            <path d="M 460,165 C 490,150 550,140 600,140 L 680,165 C 650,170 580,165 520,165 Z" fill="url(#carbonFiberPattern)" stroke="#222" stroke-width="1"/>
+                            <!-- Roof Intake Air Scoop Top Lip -->
+                            <path d="M 460,155 L 495,142 L 530,155 Z" fill="#000" stroke="#D4AF37" stroke-width="1"/>
+
+                            <!-- Front Bonnet Carbon Center Stripe & NACA Ducts -->
+                            <path d="M 220,270 C 270,255 330,245 380,230 L 375,245 C 320,260 260,272 225,280 Z" fill="url(#carbonFiberPattern)"/>
+                            <polygon points="280,262 310,258 305,265" fill="#000"/>
+
+                            <!-- Side Air Intake Scoop Behind Door -->
+                            <path d="M 625,235 C 650,225 680,225 700,240 L 685,275 C 665,260 640,255 625,255 Z" fill="url(#carbonFiberPattern)" stroke="#111"/>
+
+                            <!-- Rear Zonda Wing Assembly (Carbon Wing with Endplates & Red Lip) -->
+                            <!-- Wing Support Struts -->
+                            <rect x="830" y="220" width="8" height="45" fill="#111" transform="rotate(12 830 220)"/>
+                            <rect x="870" y="230" width="8" height="40" fill="#111" transform="rotate(12 870 230)"/>
+                            <!-- Main Wing Foil -->
+                            <path d="M 810,215 L 905,215 C 915,215 920,222 915,227 L 815,227 Z" fill="url(#carbonFiberPattern)" stroke="#222"/>
+                            <!-- Red Accent Strip on Wing Endplate -->
+                            <path d="M 905,205 L 918,205 L 918,235 L 905,235 Z" fill="#EF4444"/>
+                        </g>
+
+                        <!-- GROUP: COCKPIT CANOPY GLASS & MIRRORS -->
+                        <g id="cockpitGlass">
+                            <!-- Teardrop Glass Canopy -->
+                            <path d="M 385,230 C 425,185 470,168 535,168 C 600,168 640,190 660,225 C 570,220 480,222 385,230 Z" fill="rgba(15, 23, 42, 0.85)" stroke="#334155" stroke-width="1.5"/>
+                            <!-- Glass Reflection Highlight -->
+                            <path d="M 420,215 C 455,185 495,175 540,175 C 500,185 460,200 430,220 Z" fill="rgba(255, 255, 255, 0.35)"/>
+                            
+                            <!-- Pagani Stalk Mirrors (Ears on Front Fenders) -->
+                            <path d="M 330,235 Q 320,210 305,205 Q 315,200 325,205 Q 335,215 338,235 Z" fill="url(#carbonFiberPattern)" stroke="#000"/>
+                            <!-- Mirror Flag Color (Italian Tri-color accent) -->
+                            <rect x="303" y="203" width="5" height="3" fill="#22C55E"/>
+                            <rect x="308" y="203" width="5" height="3" fill="#FFFFFF"/>
+                            <rect x="313" y="203" width="5" height="3" fill="#EF4444"/>
+                        </g>
+
+                        <!-- FINISH OVERLAY LAYER (Dynamic Gloss or Matte Layer) -->
+                        <path id="finishOverlayPath" d="
+                            M 130,325 
+                            C 145,310 170,285 220,270 
+                            C 280,250 340,240 380,230 
+                            C 410,200 460,165 530,160 
+                            C 610,155 690,175 730,210 
+                            C 780,225 840,240 885,275 
+                            C 905,290 915,310 910,330 
+                            L 860,330 
+                            C 850,290 820,270 760,270 
+                            C 710,270 670,300 660,340 
+                            L 340,340 
+                            C 330,295 290,270 235,270 
+                            C 185,270 150,300 140,325 Z" 
+                            fill="url(#glossOverlay)" pointer-events="none" mix-blend-mode="overlay"/>
+
+                        <!-- GROUP: WHEELS, PIRELLI P ZERO TIRES & RED LIP RIMS -->
+                        <!-- FRONT WHEEL ASSEMBLY (Centered around x:235, y:335) -->
+                        <g id="frontWheelGroup" class="wheel-group">
+                            <!-- Tire Outer Rubber -->
+                            <circle cx="235" cy="335" r="50" fill="#121316" stroke="#000" stroke-width="2"/>
+                            <!-- Pirelli P Zero Lettering Ring -->
+                            <circle cx="235" cy="335" r="44" fill="none" stroke="#222" stroke-width="8"/>
+                            <text x="235" y="294" fill="#E2E8F0" font-size="5" font-family="sans-serif" font-weight="bold" text-anchor="middle" letter-spacing="1">PIRELLI P ZERO</text>
+                            
+                            <!-- Red Lip Accent Ring (Cinque Specific) -->
+                            <circle cx="235" cy="335" r="39" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+
+                            <!-- Red Brake Caliper Behind Spokes -->
+                            <path d="M 215,310 A 30 30 0 0 1 250,310 L 242,322 A 18 18 0 0 0 222,322 Z" fill="#DC2626" stroke="#991B1B"/>
+                            <text x="233" y="318" fill="#FFF" font-size="4" font-weight="bold">BREMBO</text>
+
+                            <!-- Rotating Multi-Spoke Alloy Central Rim -->
+                            <g class="wheel-spin" style="transform-origin: 235px 335px;">
+                                <circle cx="235" cy="335" r="36" fill="#1A1D24" stroke="#333"/>
+                                <!-- 9 Twin Spokes -->
+                                <g stroke="#4A5568" stroke-width="2">
+                                    <line x1="235" y1="335" x2="235" y2="300"/>
+                                    <line x1="235" y1="335" x2="258" y2="310"/>
+                                    <line x1="235" y1="335" x2="270" y2="335"/>
+                                    <line x1="235" y1="335" x2="258" y2="360"/>
+                                    <line x1="235" y1="335" x2="235" y2="370"/>
+                                    <line x1="235" y1="335" x2="212" y2="360"/>
+                                    <line x1="235" y1="335" x2="200" y2="335"/>
+                                    <line x1="235" y1="335" x2="212" y2="310"/>
+                                </g>
+                                <!-- Wheel Center Cap -->
+                                <circle cx="235" cy="335" r="8" fill="#D4AF37" stroke="#000" stroke-width="1"/>
+                                <circle cx="235" cy="335" r="4" fill="#000"/>
+                            </g>
+                        </g>
+
+                        <!-- REAR WHEEL ASSEMBLY (Centered around x:760, y:335) -->
+                        <g id="rearWheelGroup" class="wheel-group">
+                            <!-- Tire Outer Rubber -->
+                            <circle cx="760" cy="335" r="54" fill="#121316" stroke="#000" stroke-width="2"/>
+                            <!-- Pirelli P Zero Lettering Ring -->
+                            <circle cx="760" cy="335" r="47" fill="none" stroke="#222" stroke-width="9"/>
+                            <text x="760" y="291" fill="#E2E8F0" font-size="5.5" font-family="sans-serif" font-weight="bold" text-anchor="middle" letter-spacing="1">PIRELLI P ZERO</text>
+                            
+                            <!-- Red Lip Accent Ring (Cinque Specific) -->
+                            <circle cx="760" cy="335" r="41" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+
+                            <!-- Red Brake Caliper -->
+                            <path d="M 740,308 A 32 32 0 0 1 778,308 L 770,322 A 20 20 0 0 0 748,322 Z" fill="#DC2626" stroke="#991B1B"/>
+
+                            <!-- Rotating Multi-Spoke Alloy Central Rim -->
+                            <g class="wheel-spin" style="transform-origin: 760px 335px;">
+                                <circle cx="760" cy="335" r="38" fill="#1A1D24" stroke="#333"/>
+                                <!-- 9 Twin Spokes -->
+                                <g stroke="#4A5568" stroke-width="2.2">
+                                    <line x1="760" y1="335" x2="760" y2="298"/>
+                                    <line x1="760" y1="335" x2="785" y2="308"/>
+                                    <line x1="760" y1="335" x2="798" y2="335"/>
+                                    <line x1="760" y1="335" x2="785" y2="362"/>
+                                    <line x1="760" y1="335" x2="760" y2="373"/>
+                                    <line x1="760" y1="335" x2="735" y2="362"/>
+                                    <line x1="760" y1="335" x2="722" y2="335"/>
+                                    <line x1="760" y1="335" x2="735" y2="308"/>
+                                </g>
+                                <!-- Center Cap -->
+                                <circle cx="760" cy="335" r="9" fill="#D4AF37" stroke="#000" stroke-width="1"/>
+                                <circle cx="760" cy="335" r="4.5" fill="#000"/>
+                            </g>
+                        </g>
+
+                    </svg>
+                </div>
+
+                <!-- Bottom Interactive Controls Bar on Canvas -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-800/80 text-xs">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleWheelMotion()" id="motionBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-compact-disc text-yellow-400"></i>
+                            <span data-lang-en="Simulate Drive" data-lang-hr="Simulacija Vožnje">Simulacija Vožnje</span>
+                        </button>
+                        <button onclick="resetCarColor()" class="px-3 py-1.5 rounded-lg bg-gray-800/60 hover:bg-gray-700 text-gray-400 hover:text-white transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i>
+                            <span data-lang-en="Cinque Pearl White" data-lang-hr="Cinque Biserna Bijela">Cinque Biserna Bijela</span>
+                        </button>
+                    </div>
+
+                    <div class="flex items-center space-x-2 text-gray-400">
+                        <span><i class="fa-solid fa-layer-group text-yellow-500 mr-1"></i> DOMA Carbon-Bond Coating</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CUSTOMIZATION CONTROLS PANEL (4 cols) -->
+            <div class="lg:col-span-4 glass-panel rounded-2xl p-6 border border-yellow-500/20 flex flex-col justify-between space-y-6">
+                <div>
+                    <h3 class="font-serif font-bold text-lg text-yellow-400 mb-1 flex items-center justify-between">
+                        <span data-lang-en="Atelier Paint Palette" data-lang-hr="Atelier Paleta Boja">Atelier Paleta Boja</span>
+                        <i class="fa-solid fa-palette text-sm"></i>
+                    </h3>
+                    <p class="text-xs text-gray-400 mb-4" data-lang-en="Select iconic high-gloss or matte architectural finishes." data-lang-hr="Odaberite ikonične visoko-sjajne ili mat završne tonove.">
+                        Odaberite ikonične visoko-sjajne ili mat završne tonove.
+                    </p>
+
+                    <!-- Preset Palette Buttons -->
+                    <div class="grid grid-cols-5 gap-2.5 mb-6">
+                        <!-- Cinque Original White -->
+                        <button onclick="applyCarColor('#F4F4F0', '#FFFFFF')" class="w-full aspect-square rounded-xl bg-slate-100 border-2 border-yellow-500/80 hover:scale-105 transition shadow-md relative group">
+                            <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-black text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition whitespace-nowrap">Cinque Pearl</span>
+                        </button>
+                        <!-- DOMA Liquid Gold -->
+                        <button onclick="applyCarColor('#D4AF37', '#F3E5AB')" class="w-full aspect-square rounded-xl bg-amber-500 border border-amber-300/40 hover:scale-105 transition shadow-md relative group">
+                            <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-black text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition whitespace-nowrap">DOMA Gold</span>
+                        </button>
+                        <!-- Cyan Hyper Spark -->
+                        <button onclick="applyCarColor('#00F2FE', '#4FACFE')" class="w-full aspect-square rounded-xl bg-cyan-400 border border-cyan-200/40 hover:scale-105 transition shadow-md relative group">
+                            <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-black text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition whitespace-nowrap">Atelier Cyan</span>
+                        </button>
+                        <!-- Rosso Monza Red -->
+                        <button onclick="applyCarColor('#DC2626', '#F87171')" class="w-full aspect-square rounded-xl bg-red-600 border border-red-400/40 hover:scale-105 transition shadow-md relative group">
+                            <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-black text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition whitespace-nowrap">Rosso Corsa</span>
+                        </button>
+                        <!-- Stealth Carbon Satin Black -->
+                        <button onclick="applyCarColor('#1E293B', '#334155')" class="w-full aspect-square rounded-xl bg-slate-800 border border-slate-600/40 hover:scale-105 transition shadow-md relative group">
+                            <span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-black text-[9px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition whitespace-nowrap">Satin Graphite</span>
+                        </button>
+                    </div>
+
+                    <!-- Custom Color Picker -->
+                    <div class="mb-6">
+                        <label class="block text-xs font-semibold text-gray-300 mb-2 flex items-center justify-between">
+                            <span data-lang-en="Custom Body Tint" data-lang-hr="Prilagođena Nijansa Karoserije">Prilagođena Nijansa Karoserije</span>
+                            <span id="hexCodeDisplay" class="font-mono text-yellow-400">#F4F4F0</span>
+                        </label>
+                        <div class="flex items-center space-x-3">
+                            <input type="color" id="customColorInput" value="#F4F4F0" oninput="handleCustomColor(this.value)" class="w-12 h-10 rounded-lg cursor-pointer bg-transparent border-0">
+                            <div class="text-[11px] text-gray-400 leading-tight">
+                                <span data-lang-en="Seamless ceramic PPG formula matching." data-lang-hr="Brezprijekorno usklađivanje keramičke PPG formule.">Brezprijekorno usklađivanje keramičke PPG formule.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Finish Switcher (Gloss vs Matte) -->
+                    <div class="mb-6">
+                        <label class="block text-xs font-semibold text-gray-300 mb-2" data-lang-en="Coat Surface Finish" data-lang-hr="Završni Sjaj Karoserije">Završni Sjaj Karoserije</label>
+                        <div class="grid grid-cols-2 gap-2 bg-black/40 p-1 rounded-xl border border-gray-800">
+                            <button id="finishGlossBtn" onclick="setFinish('gloss')" class="py-2 text-xs rounded-lg font-medium transition bg-yellow-500/20 text-yellow-300 border border-yellow-500/40">
+                                <i class="fa-solid fa-sun mr-1"></i> High Gloss
+                            </button>
+                            <button id="finishMatteBtn" onclick="setFinish('matte')" class="py-2 text-xs rounded-lg font-medium transition text-gray-400 hover:text-white">
+                                <i class="fa-solid fa-moon mr-1"></i> Satin Matte
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Specs Summary -->
+                    <div class="p-3.5 rounded-xl bg-black/30 border border-yellow-500/10 space-y-2 text-xs">
+                        <div class="flex justify-between text-gray-400">
+                            <span data-lang-en="Base Vehicle:" data-lang-hr="Vozilo:">Vozilo:</span>
+                            <span class="text-gray-200 font-semibold">Pagani Zonda Cinque</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span data-lang-en="Coating Tech:" data-lang-hr="Tehnologija Premaza:">Tehnologija Premaza:</span>
+                            <span class="text-yellow-400 font-semibold">DOMA Ceramic Nano-Shield</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span data-lang-en="Durability Guarantee:" data-lang-hr="Jamstvo Postojanosti:">Jamstvo Postojanosti:</span>
+                            <span class="text-emerald-400 font-semibold">15 Years / 15 Godina</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="requestCarQuote()" class="w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-black bg-gradient-to-r from-yellow-400 to-amber-500 hover:brightness-110 shadow-lg shadow-yellow-500/20 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span data-lang-en="Reserve Automotive Atelier Slot" data-lang-hr="Rezerviraj Termim u Atelieru">Rezerviraj Termim u Atelieru</span>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ARCHITECTURAL COATINGS & CALCULATOR SECTION -->
+    <section id="architectural" class="py-16 px-4 lg:px-12 bg-black/40 border-y border-yellow-500/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Info Column (6 cols) -->
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
+                        <i class="fa-solid fa-building mr-1"></i> DOMA Villa Architecture
+                    </span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold leading-tight">
+                        <span data-lang-en="Ultra-Luxury Villa & Exterior Coating" data-lang-hr="Ekskluzivni Premazi za Luksuzne Vile">Ekskluzivni Premazi za Luksuzne Vile</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed" data-lang-en="Applying hypercar nano-ceramic longevity to architectural masterpieces. Resists UV, salt air erosion, and micro-cracking." data-lang-hr="Primjena nanotehnologije iz automobilskog svijeta na arhitektonske objekte. Otporno na UV zračenje, posolicu i mikropukotine.">
+                        Primjena nanotehnologije iz automobilskog svijeta na arhitektonske objekte. Otporno na UV zračenje, posolicu i mikropukotine.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl glass-card border border-gray-800">
+                            <div class="text-2xl font-bold text-yellow-400 font-serif mb-1">455 €</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider" data-lang-en="Price per m² (All-Inclusive)" data-lang-hr="Cijena po m² (Sve Uključeno)">Cijena po m² (Sve Uključeno)</div>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border border-gray-800">
+                            <div class="text-2xl font-bold text-cyan-400 font-serif mb-1">20 Yrs</div>
+                            <div class="text-xs text-gray-400 uppercase tracking-wider" data-lang-en="Architectural Guarantee" data-lang-hr="Arhitektonsko Jamstvo">Arhitektonsko Jamstvo</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculator Card (6 cols) -->
+                <div class="lg:col-span-6 glass-panel rounded-2xl p-8 border border-yellow-500/20 shadow-2xl">
+                    <h3 class="font-serif font-bold text-xl text-yellow-400 mb-6 flex items-center justify-between">
+                        <span data-lang-en="Villa Coating Investment Calculator" data-lang-hr="Kalkulator Arhitektonske Investicije">Kalkulator Arhitektonske Investicije</span>
+                        <i class="fa-solid fa-calculator text-gray-400"></i>
+                    </h3>
+
+                    <!-- Slider for m2 -->
+                    <div class="space-y-4 mb-8">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-300 font-medium" data-lang-en="Surface Area (m²):" data-lang-hr="Površina Objektima (m²):">Površina Objektima (m²):</span>
+                            <span id="sqmValue" class="text-2xl font-bold text-cyan-400 font-mono">250 m²</span>
+                        </div>
+                        <input type="range" id="sqmSlider" min="50" max="1500" value="250" step="10" oninput="updateVillaCalculator(this.value)" class="w-full">
+                        <div class="flex justify-between text-[11px] text-gray-500 font-mono">
+                            <span>50 m²</span>
+                            <span>750 m²</span>
+                            <span>1500 m²</span>
+                        </div>
+                    </div>
+
+                    <!-- Calculated Breakdown -->
+                    <div class="p-5 rounded-xl bg-black/50 border border-gray-800 space-y-3 mb-6">
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span data-lang-en="Base Atelier Rate:" data-lang-hr="Osnovna Atelier Stopa:">Osnovna Atelier Stopa:</span>
+                            <span class="font-mono text-gray-200">455.00 € / m²</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span data-lang-en="Surface Prep & Primer:" data-lang-hr="Priprema i Primer Podloge:">Priprema i Primer Podloge:</span>
+                            <span class="text-emerald-400" data-lang-en="Included" data-lang-hr="Uključeno">Uključeno</span>
+                        </div>
+                        <div class="h-px bg-gray-800 my-2"></div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-sm text-gray-200" data-lang-en="Estimated Total Investment:" data-lang-hr="Procijenjena Ukupna Investicija:">Procijenjena Ukupna Investicija:</span>
+                            <span id="totalVillaCost" class="text-3xl font-serif font-extrabold gold-gradient-text">113.750 €</span>
+                        </div>
+                    </div>
+
+                    <button onclick="requestVillaQuote()" class="w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider text-black bg-gradient-to-r from-cyan-400 to-blue-500 hover:brightness-110 transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span data-lang-en="Request Architectural Inspection" data-lang-hr="Zatraži Arhitektonski Uvid">Zatraži Arhitektonski Uvid</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RESTORATION BEFORE / AFTER SLIDER SECTION -->
+    <section id="restoration" class="py-16 px-4 lg:px-12 max-w-7xl mx-auto w-full">
+        <div class="text-center mb-10">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 mb-2">
+                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> DOMA Mastery
+            </span>
+            <h2 class="font-serif text-3xl md:text-4xl font-bold">
+                <span data-lang-en="Restoration & Precision Refinishing" data-lang-hr="Restauracija i Precizna Obnova">Restauracija i Precizna Obnova</span>
+            </h2>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto mt-2" data-lang-en="Drag the slider to inspect DOMA's restoration finish on degraded surfaces." data-lang-hr="Povucite klizač za prikaz DOMA restauracije na oštećenim površinama.">
+                Povucite klizač za prikaz DOMA restauracije na oštećenim površinama.
+            </p>
+        </div>
+
+        <!-- Before / After Interactive Container -->
+        <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden glass-panel border border-yellow-500/20 relative shadow-2xl h-[380px] md:h-[480px] ba-container" id="baContainer">
+            
+            <!-- AFTER IMAGE (Underneath - Restored DOMA Coating) -->
+            <div class="absolute inset-0 w-full h-full bg-cover bg-center flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+                <span class="absolute top-6 right-6 bg-yellow-500 text-black font-bold text-xs px-3 py-1 rounded-full shadow-lg">
+                    <i class="fa-solid fa-check-circle mr-1"></i> DOMA RESTORED
+                </span>
+            </div>
+
+            <!-- BEFORE IMAGE (Overlay - Weathered Surface) -->
+            <div class="ba-overlay" id="baOverlay">
+                <div class="absolute inset-0 w-full h-full bg-cover bg-center flex items-center justify-center filter brightness-75 contrast-125 sepia-[0.3]" style="background-image: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop'); width: 896px;">
+                    <div class="absolute inset-0 bg-red-950/20"></div>
+                    <span class="absolute top-6 left-6 bg-black/80 text-red-400 border border-red-500/40 font-bold text-xs px-3 py-1 rounded-full">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> DEGRADED ORIGINAL
+                    </span>
+                </div>
+            </div>
+
+            <!-- SLIDER SEPARATOR LINE & DRAG HANDLE -->
+            <div class="absolute top-0 bottom-0 w-1 bg-yellow-400 z-30 cursor-ew-resize shadow-[0_0_15px_#D4AF37]" id="baHandle" style="left: 50%;">
+                <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-yellow-400 text-black flex items-center justify-center shadow-xl font-bold border-2 border-black">
+                    <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDERS & ABOUT SECTION (STRICT NO-HYPHEN DOMOVIĆ COMPLIANCE) -->
+    <section id="about" class="py-16 px-4 lg:px-12 bg-black/60 border-t border-yellow-500/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 mb-2">
+                    <i class="fa-solid fa-user-shield mr-1"></i> DOMA Leadership
+                </span>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold">
+                    <span data-lang-en="Founders & Craftsmanship Standard" data-lang-hr="Osnivači i Arhitektonski Standard">Osnivači i Arhitektonski Standard</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Founder 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-yellow-500/20 flex items-start space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-yellow-500 to-amber-200 flex-shrink-0 flex items-center justify-center text-black font-serif font-black text-2xl shadow-lg">
+                        MN
+                    </div>
+                    <div>
+                        <h3 class="font-serif font-bold text-xl text-yellow-400 nobreak">Matej Nekich</h3>
+                        <p class="text-xs text-gray-400 mb-3" data-lang-en="Co-Founder & Chief Technical Master" data-lang-hr="Suosnivač i Glavni Tehnički Majstor">Suosnivač i Glavni Tehnički Majstor</p>
+                        <p class="text-xs text-gray-300 leading-relaxed" data-lang-en="Specializes in chemical surface bonding physics and automotive nano-coatings." data-lang-hr="Specijalist za kemijsku adheziju površina i automobilsku nanotehnologiju.">
+                            Specijalist za kemijsku adheziju površina i automobilsku nanotehnologiju.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Founder 2 (Strict non-breaking text on surname Domović) -->
+                <div class="glass-panel p-6 rounded-2xl border border-yellow-500/20 flex items-start space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex-shrink-0 flex items-center justify-center text-black font-serif font-black text-2xl shadow-lg">
+                        BD
+                    </div>
+                    <div>
+                        <!-- STRICT RULE: Bruno Domović must NEVER break with hyphens -->
+                        <h3 class="font-serif font-bold text-xl text-cyan-400 nobreak">Bruno Domović</h3>
+                        <p class="text-xs text-gray-400 mb-3" data-lang-en="Co-Founder & Architectural Visionary" data-lang-hr="Suosnivač i Arhitektonski Vizionar">Suosnivač i Arhitektonski Vizionar</p>
+                        <p class="text-xs text-gray-300 leading-relaxed" data-lang-en="Leads high-end villa exterior design integrations and structural aesthetics." data-lang-hr="Vodi projekte vanjskih fasadnih sustava za luksuzne rezidencijalne vile.">
+                            Vodi projekte vanjskih fasadnih sustava za luksuzne rezidencijalne vile.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="glass-panel border-t border-yellow-500/20 py-12 px-4 lg:px-12 mt-auto">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs">
+            <div>
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="font-serif font-bold text-xl gold-gradient-text">DOMA</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed" data-lang-en="DOMA Paint Atelier & Architectural Coatings. Excellence in hypercar finishes and villa restorations." data-lang-hr="DOMA Paint Atelier & Architectural Coatings. Vrhunski automobilski premazi i obnova vila.">
+                    DOMA Paint Atelier & Architectural Coatings. Vrhunski automobilski premazi i obnova vila.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-gray-200 mb-3 uppercase tracking-wider" data-lang-en="Atelier Contact" data-lang-hr="Atelier Kontakt">Atelier Kontakt</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-yellow-500"></i> Zagreb / Ivanić-Grad, Croatia</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-yellow-500"></i> info@doma-atelier.hr</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-yellow-500"></i> +385 (0) 91 555 0192</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-gray-200 mb-3 uppercase tracking-wider" data-lang-en="Founders" data-lang-hr="Osnivači">Osnivači</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="nobreak"><i class="fa-solid fa-user-check text-yellow-500 mr-1.5"></i> Matej Nekich</li>
+                    <li class="nobreak"><i class="fa-solid fa-user-check text-cyan-400 mr-1.5"></i> Bruno Domović</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-gray-200 mb-3 uppercase tracking-wider" data-lang-en="Standards" data-lang-hr="Standardi">Standardi</h4>
+                <p class="text-gray-400 leading-relaxed" data-lang-en="All paints formulated under ISO 9001 nano-coating certification." data-lang-hr="Svi premazi razvijeni prema ISO 9001 nano-certifikatu.">
+                    Svi premazi razvijeni prema ISO 9001 nano-certifikatu.
+                </p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center text-[11px] text-gray-500">
+            <p>© 2026 DOMA Paint Atelier & Architectural Coatings. All rights reserved.</p>
+            <p class="mt-2 sm:mt-0 font-mono text-yellow-500/60">DOMA Hypercar Vector Spec v4.0</p>
+        </div>
+    </footer>
+
+    <!-- MODAL NOTIFICATION DIALOG -->
+    <div id="domaModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-md w-full rounded-2xl p-6 border border-yellow-500/30 shadow-2xl relative text-center">
+            <div class="w-12 h-12 rounded-full bg-yellow-500/20 text-yellow-400 flex items-center justify-center text-xl mx-auto mb-4 border border-yellow-500/40">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="modalTitle" class="font-serif font-bold text-xl text-gray-100 mb-2">Inquiry Received</h3>
+            <p id="modalMessage" class="text-xs text-gray-300 leading-relaxed mb-6">Our DOMA bespoke specialist will review your request.</p>
+            <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase bg-yellow-500 text-black hover:bg-yellow-400 transition">
+                Close / Zatvori
+            </button>
+        </div>
+    </div>
+
+    <!-- APPLICATION JAVASCRIPT LOGIC -->
+    <script>
+        // GLOBAL STATE
+        let currentLanguage = 'HR'; // 'HR' or 'EN'
+        let currentFinish = 'gloss';
+        let isWheelActive = false;
+        let audioContext = null;
+
+        // DUAL LANGUAGE TOGGLE LOGIC
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'HR' ? 'EN' : 'HR';
+            const elements = document.querySelectorAll('[data-lang-en]');
+            
+            elements.forEach(el => {
+                if (currentLanguage === 'EN') {
+                    el.textContent = el.getAttribute('data-lang-en');
+                } else {
+                    el.textContent = el.getAttribute('data-lang-hr');
+                }
+            });
+
+            document.getElementById('langLabel').textContent = currentLanguage === 'HR' ? 'HR / EN' : 'EN / HR';
+        }
+
+        // CAR COLOR CUSTOMIZER LOGIC
+        function applyCarColor(primaryHex, doorHex) {
+            const mainBody = document.getElementById('carMainBody');
+            const doorPanel = document.getElementById('carDoorPanel');
+            const hexDisplay = document.getElementById('hexCodeDisplay');
+            
+            if (mainBody) mainBody.setAttribute('fill', primaryHex);
+            if (doorPanel) doorPanel.setAttribute('fill', doorHex || primaryHex);
+            if (hexDisplay) hexDisplay.textContent = primaryHex.toUpperCase();
+            
+            document.getElementById('customColorInput').value = primaryHex;
+        }
+
+        function handleCustomColor(hexValue) {
+            applyCarColor(hexValue, hexValue);
+        }
+
+        function resetCarColor() {
+            applyCarColor('#F4F4F0', '#FFFFFF');
+            setFinish('gloss');
+        }
+
+        function setFinish(finishType) {
+            currentFinish = finishType;
+            const glossBtn = document.getElementById('finishGlossBtn');
+            const matteBtn = document.getElementById('finishMatteBtn');
+            const overlayPath = document.getElementById('finishOverlayPath');
+
+            if (finishType === 'gloss') {
+                glossBtn.className = "py-2 text-xs rounded-lg font-medium transition bg-yellow-500/20 text-yellow-300 border border-yellow-500/40";
+                matteBtn.className = "py-2 text-xs rounded-lg font-medium transition text-gray-400 hover:text-white";
+                if (overlayPath) overlayPath.setAttribute('fill', 'url(#glossOverlay)');
+            } else {
+                matteBtn.className = "py-2 text-xs rounded-lg font-medium transition bg-yellow-500/20 text-yellow-300 border border-yellow-500/40";
+                glossBtn.className = "py-2 text-xs rounded-lg font-medium transition text-gray-400 hover:text-white";
+                if (overlayPath) overlayPath.setAttribute('fill', 'url(#matteOverlay)');
+            }
+        }
+
+        // WHEEL SIMULATION TOGGLE
+        function toggleWheelMotion() {
+            isWheelActive = !isWheelActive;
+            const frontWheel = document.getElementById('frontWheelGroup');
+            const rearWheel = document.getElementById('rearWheelGroup');
+            const motionBtn = document.getElementById('motionBtn');
+
+            if (isWheelActive) {
+                frontWheel.classList.add('wheel-active');
+                rearWheel.classList.add('wheel-active');
+                motionBtn.classList.add('bg-yellow-500/20', 'text-yellow-300', 'border', 'border-yellow-500/40');
+            } else {
+                frontWheel.classList.remove('wheel-active');
+                rearWheel.classList.remove('wheel-active');
+                motionBtn.classList.remove('bg-yellow-500/20', 'text-yellow-300', 'border', 'border-yellow-500/40');
+            }
+        }
+
+        // V12 ACOUSTIC SYNTHESIZER (NO EXTERNAL AUDIO DEPENDENCY)
+        function toggleEngineSound() {
+            try {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, audioContext.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(380, audioContext.currentTime + 0.8);
+                osc.frequency.exponentialRampToValueAtTime(140, audioContext.currentTime + 1.8);
+
+                gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 2.0);
+
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+
+                osc.start();
+                osc.stop(audioContext.currentTime + 2.0);
+
+                showModal(
+                    currentLanguage === 'EN' ? 'V12 Acoustic Sound Profile' : 'Akustični V12 Zvučni Profil',
+                    currentLanguage === 'EN' ? 'Simulating Pagani Zonda Cinque V12 engine rev sequence.' : 'Simulacija zvuka Pagani Zonda Cinque V12 motora.'
+                );
+            } catch (e) {
+                console.log('Audio init prevented:', e);
+            }
+        }
+
+        // VILLA CALCULATOR LOGIC
+        function updateVillaCalculator(val) {
+            const sqmDisplay = document.getElementById('sqmValue');
+            const costDisplay = document.getElementById('totalVillaCost');
+            const rate = 455; // Fixed 455 € / m² rule
+
+            sqmDisplay.textContent = `${val} m²`;
+            const total = val * rate;
+            costDisplay.textContent = new Intl.NumberFormat('de-DE').format(total) + ' €';
+        }
+
+        // BEFORE / AFTER SLIDER INTERACTION
+        const baContainer = document.getElementById('baContainer');
+        const baOverlay = document.getElementById('baOverlay');
+        const baHandle = document.getElementById('baHandle');
+        let isDraggingBA = false;
+
+        if (baContainer) {
+            const moveSlider = (x) => {
+                const rect = baContainer.getBoundingClientRect();
+                let posX = x - rect.left;
+                if (posX < 0) posX = 0;
+                if (posX > rect.width) posX = rect.width;
+                
+                const percentage = (posX / rect.width) * 100;
+                baOverlay.style.width = `${percentage}%`;
+                baHandle.style.left = `${percentage}%`;
+            };
+
+            baContainer.addEventListener('mousedown', (e) => { isDraggingBA = true; moveSlider(e.clientX); });
+            window.addEventListener('mouseup', () => { isDraggingBA = false; });
+            window.addEventListener('mousemove', (e) => { if (isDraggingBA) moveSlider(e.clientX); });
+
+            // Touch events for mobile
+            baContainer.addEventListener('touchstart', (e) => { isDraggingBA = true; moveSlider(e.touches[0].clientX); });
+            window.addEventListener('touchend', () => { isDraggingBA = false; });
+            window.addEventListener('touchmove', (e) => { if (isDraggingBA) moveSlider(e.touches[0].clientX); });
+        }
+
+        // MODAL HELPERS
+        function showModal(title, msg) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = msg;
+            document.getElementById('domaModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('domaModal').classList.add('hidden');
+        }
+
+        function requestCarQuote() {
+            showModal(
+                currentLanguage === 'EN' ? 'Automotive Slot Reserved' : 'Automobilski Termin Zaprimljen',
+                currentLanguage === 'EN' ? 'Your bespoke Pagani Zonda Cinque specification has been sent to founders Matej Nekich & Bruno Domović.' : 'Vaša specifikacija za Pagani Zonda Cinque proslijeđena je osnivačima (Matej Nekich & Bruno Domović).'
+            );
+        }
+
+        function requestVillaQuote() {
+            const sqm = document.getElementById('sqmSlider').value;
+            const total = new Intl.NumberFormat('de-DE').format(sqm * 455);
+            showModal(
+                currentLanguage === 'EN' ? 'Architectural Request Sent' : 'Arhitektonski Upit Zaprimljen',
+                currentLanguage === 'EN' ? `Inspection for ${sqm} m² villa surface (Estimated ${total} €) logged.` : `Zahtjev za uvid na površini od ${sqm} m² (Procjena: ${total} €) je zaprimljen.`
+            );
+        }
+    </script>
+</body>
+</html>
